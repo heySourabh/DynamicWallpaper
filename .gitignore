@@ -1,0 +1,13 @@
+# IDE files
+.idea/
+*.iml
+
+# image files
+*.png
+*.jpg
+
+# compiled files
+*.class
+
+# environment variables
+*.env
