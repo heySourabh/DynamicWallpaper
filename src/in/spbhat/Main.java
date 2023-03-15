@@ -34,7 +34,7 @@ public class Main {
 
     private static void setWallpaper(WallpaperGenerator wallpaperGenerator) throws IOException {
         Properties myEnv = new Properties();
-        try (var envFile = Main.class.getResourceAsStream("in/spbhat/.env")) {
+        try (var envFile = Main.class.getResourceAsStream(".env")) {
             myEnv.load(envFile);
         }
 
