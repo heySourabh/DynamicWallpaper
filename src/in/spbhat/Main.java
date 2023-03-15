@@ -1,3 +1,5 @@
+package in.spbhat;
+
 import in.spbhat.wallpaper.WallpaperGenerator;
 import in.spbhat.wallpaper.impl.MandelbrotSet;
 import in.spbhat.wallpaper.impl.RandomGradient;
