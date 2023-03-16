@@ -7,6 +7,8 @@ import in.spbhat.wallpaper.impl.RandomGradient;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 import java.time.Duration;
 import java.util.Properties;
 import java.util.Random;
@@ -24,7 +26,7 @@ public class Main {
         while (running) {
             System.out.println("Changing background...");
             setWallpaper(generators[rnd.nextInt(generators.length)]);
-            sleepFor(ofMinutes(1));
+            sleepFor(ofMinutes(2));
         }
     }
 
@@ -38,9 +40,13 @@ public class Main {
             myEnv.load(envFile);
         }
 
-        String wallpaperFolderPath = myEnv.getProperty("WALL_PAPER_FOLDER");
-        File wallpaperFile = new File(wallpaperFolderPath, "wallpaper.png");
+        File wallpaperFolderPath = new File(myEnv.getProperty("WALL_PAPER_FOLDER"));
+        File wallpaperFile = new File("generated_wallpaper.png");
         var wallpaper = wallpaperGenerator.createWallpaper(1920, 1200);
         ImageIO.write(wallpaper, "PNG", wallpaperFile);
+        Files.move(wallpaperFile.toPath(),
+                new File(wallpaperFolderPath, wallpaperFile.getName()).toPath(),
+                StandardCopyOption.REPLACE_EXISTING);
+        wallpaper.flush();
     }
 }
