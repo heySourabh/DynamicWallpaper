@@ -5,6 +5,7 @@ import in.spbhat.wallpaper.impl.MandelbrotSet;
 import in.spbhat.wallpaper.impl.RandomGradient;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,11 +18,11 @@ import java.util.concurrent.locks.LockSupport;
 import static java.time.Duration.ofMinutes;
 
 public class Main {
-    final static WallpaperGenerator[] generators = {new RandomGradient(), new MandelbrotSet(),};
-
-    final static Random rnd = new Random();
+    private final static WallpaperGenerator[] generators = {new RandomGradient(), new MandelbrotSet(),};
+    private final static BufferedImage wallpaper = new BufferedImage(1920, 1200, BufferedImage.TYPE_INT_RGB);
 
     public static void main(String[] args) throws IOException {
+        Random rnd = new Random();
         boolean running = true;
         while (running) {
             System.out.println("Changing background...");
@@ -42,7 +43,7 @@ public class Main {
 
         File wallpaperFolderPath = new File(myEnv.getProperty("WALL_PAPER_FOLDER"));
         File wallpaperFile = new File("generated_wallpaper.png");
-        var wallpaper = wallpaperGenerator.createWallpaper(1920, 1200);
+        wallpaperGenerator.createWallpaper(wallpaper);
         ImageIO.write(wallpaper, "PNG", wallpaperFile);
         Files.move(wallpaperFile.toPath(),
                 new File(wallpaperFolderPath, wallpaperFile.getName()).toPath(),

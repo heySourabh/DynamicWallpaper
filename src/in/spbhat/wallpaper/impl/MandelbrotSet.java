@@ -14,9 +14,11 @@ public class MandelbrotSet implements WallpaperGenerator {
             new Location(new Complex(-0.6, 0), 2.8),
             new Location(new Complex(-0.748, 0.1), 0.01),
     };
+
     @Override
-    public BufferedImage createWallpaper(int width, int height) {
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+    public void createWallpaper(BufferedImage wallpaper) {
+        int width = wallpaper.getWidth();
+        int height = wallpaper.getHeight();
         double heightToWidthRatio = 1.0 * height / width;
         Random rnd = new Random();
         Location interesting_location = interestingLocations[rnd.nextInt(interestingLocations.length)];
@@ -35,11 +37,9 @@ public class MandelbrotSet implements WallpaperGenerator {
                 double re = realMin + x * delta_re;
                 double im = imaginaryMin + (height - y - 1) * delta_im;
                 int rgb = getRGB(new Complex(re, im), hueStart, hueEnd);
-                image.setRGB(x, y, rgb);
+                wallpaper.setRGB(x, y, rgb);
             }
         }
-
-        return image;
     }
 
     private static int getRGB(Complex c, double hueStart, double hueEnd) {

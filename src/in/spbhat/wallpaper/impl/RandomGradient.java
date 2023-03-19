@@ -28,14 +28,17 @@ public class RandomGradient implements WallpaperGenerator {
     };
 
     @Override
-    public BufferedImage createWallpaper(int width, int height) {
+    public void createWallpaper(BufferedImage blankWallpaper) {
         Random rnd = new Random();
-        return rnd.nextDouble() < 0.5
-                ? linearGradient(width, height)
-                : radialGradient(width, height);
+        if (rnd.nextDouble() < 0.5)
+            linearGradient(blankWallpaper);
+        else
+            radialGradient(blankWallpaper);
     }
 
-    private BufferedImage linearGradient(int width, int height) {
+    private void linearGradient(BufferedImage wallpaper) {
+        int width = wallpaper.getWidth();
+        int height = wallpaper.getHeight();
         Point lower_left = new Point(0, height);
         Point lower_right = new Point(width, height);
         Point upper_left = new Point(0, 0);
@@ -51,14 +54,14 @@ public class RandomGradient implements WallpaperGenerator {
         Color color1 = palette.colors[0];
         Color color2 = palette.colors[1];
 
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
+        Graphics2D g = wallpaper.createGraphics();
         g.setPaint(new GradientPaint(corner1.x, corner1.y, color1, corner2.x, corner2.y, color2));
         g.fillRect(0, 0, width, height);
-        return image;
     }
 
-    private BufferedImage radialGradient(int width, int height) {
+    private void radialGradient(BufferedImage wallpaper) {
+        int width = wallpaper.getWidth();
+        int height = wallpaper.getHeight();
         Point lower_left = new Point(0, height);
         Point lower_right = new Point(width, height);
         Point upper_left = new Point(0, 0);
@@ -77,11 +80,9 @@ public class RandomGradient implements WallpaperGenerator {
         Color color1 = palette.colors[0];
         Color color2 = palette.colors[1];
 
-        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = image.createGraphics();
+        Graphics2D g = wallpaper.createGraphics();
         g.setPaint(new RadialGradientPaint((float) center.x, (float) center.y, (float) radius,
                 new float[]{0, 1}, new Color[]{color1, color2}));
         g.fillRect(0, 0, width, height);
-        return image;
     }
 }
