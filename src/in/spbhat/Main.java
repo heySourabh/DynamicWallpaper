@@ -1,6 +1,7 @@
 package in.spbhat;
 
 import in.spbhat.wallpaper.WallpaperGenerator;
+import in.spbhat.wallpaper.impl.JuliaSet;
 import in.spbhat.wallpaper.impl.MandelbrotSet;
 import in.spbhat.wallpaper.impl.RandomGradient;
 
@@ -18,7 +19,11 @@ import java.util.concurrent.locks.LockSupport;
 import static java.time.Duration.ofMinutes;
 
 public class Main {
-    private final static WallpaperGenerator[] generators = {new RandomGradient(), new MandelbrotSet(),};
+    private final static WallpaperGenerator[] generators = {
+            new RandomGradient(),
+            new MandelbrotSet(),
+            new JuliaSet(),
+    };
     private final static BufferedImage wallpaper = new BufferedImage(1920, 1200, BufferedImage.TYPE_INT_RGB);
 
     public static void main(String[] args) throws IOException {
@@ -42,9 +47,9 @@ public class Main {
         }
 
         File wallpaperFolderPath = new File(myEnv.getProperty("WALL_PAPER_FOLDER"));
-        File wallpaperFile = new File("generated_wallpaper.png");
+        File wallpaperFile = new File("background.jpg");
         wallpaperGenerator.createWallpaper(wallpaper);
-        ImageIO.write(wallpaper, "PNG", wallpaperFile);
+        ImageIO.write(wallpaper, "JPEG", wallpaperFile);
         Files.move(wallpaperFile.toPath(),
                 new File(wallpaperFolderPath, wallpaperFile.getName()).toPath(),
                 StandardCopyOption.REPLACE_EXISTING);
