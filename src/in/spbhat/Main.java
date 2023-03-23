@@ -53,6 +53,5 @@ public class Main {
         Files.move(wallpaperFile.toPath(),
                 new File(wallpaperFolderPath, wallpaperFile.getName()).toPath(),
                 StandardCopyOption.REPLACE_EXISTING);
-        wallpaper.flush();
     }
 }
